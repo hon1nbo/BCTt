@@ -1,0 +1,7 @@
+algorithm:sha256:hex
+signatureParameter:X-Message-Signature: 
+parseParameter:X-App-UserId: 
+parseParameter:X-Message-Timestamp: 
+parseParameter:[BCTt:message_body]
+postParseParameter:macKey:XXXXXX
+doFinalString:parseParameter-01.parseParameter-00.postParseParameter-00.parseParameter-02.

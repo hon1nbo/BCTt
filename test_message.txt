@@ -1,0 +1,29 @@
+POST /what/is/this/wizardry! HTTP/1.1
+X-App-UserId: Merlin
+Content-Type: application/json;charset=utf-8
+X-Message-Type: a wizard spell
+X-Message-Timestamp: 10:53:26
+X-App-Locale: en_US
+X-Message-Signature: 9CC361C30A6D7A953C332B129CBBD55D858B74D936DF6F186111A4D171682E9D
+Host: 192.168.1.1
+Connection: Keep-Alive
+
+I AM A MUDKIP! WHAT ARE YOU GOOD SIR?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
