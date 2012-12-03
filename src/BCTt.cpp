@@ -37,6 +37,8 @@ int main(int argc, char* argv[])
     cout << "File Path: " << filePath << endl;
 
     executeSigning((char*)filePath.c_str(), configFilePath);
+    
+    cout << "Terminating." << endl;
 
     return 0;
 }
@@ -81,20 +83,21 @@ void executeSigning(char* filePath, char* configFilePath)
     }
       else
       {
+        getline(messageFile, inbuf);    // have one before the while loop to prime it to fix eof problems
+        
         while (!messageFile.eof())
         {
-          getline(messageFile, inbuf);
-
           int spot = inbuf.find(search_string);
           if(spot >= 0)
           {
             string tmpstring = inbuf.substr(0,spot);
             tmpstring += replace_string;
-            tmpstring += inbuf.substr(spot+search_string.length());
+            tmpstring += inbuf.substr(spot+search_string.length(), inbuf.length());
             inbuf = tmpstring;
           }
 
           tempFileOut << inbuf << endl;
+          getline(messageFile, inbuf);
         }
 
         messageFile.close();
@@ -105,22 +108,28 @@ void executeSigning(char* filePath, char* configFilePath)
     ifstream tempFileIn;
     tempFileIn.open("temp_message.txt");
 
-    ofstream messageFileNew(filePath);
+    ofstream messageFileNew;
+    messageFileNew.open(filePath);
 
-    if (!tempFileIn.is_open())
+    if (!tempFileIn.is_open() || !messageFileNew.is_open())
     {
         cerr << "Error opening temporary message file!" << endl;
+        exit(1);
     }
     else
     {
+        getline(tempFileIn, inbuf);
+        
         while (!tempFileIn.eof())
         {
-            getline(tempFileIn, inbuf);
             messageFileNew << inbuf << endl;
+            getline(tempFileIn, inbuf);
         }
     }
 
     tempFileIn.close();
     messageFileNew.close();
+    
+    cout << "Done." << endl;
 }
 

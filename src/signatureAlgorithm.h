@@ -13,6 +13,7 @@
 #define signatureAlgorithm_h
 
 #include <string>
+#include <iostream>
 #include "supportedAlgorithms.h"
 
 using namespace std;
@@ -32,22 +33,63 @@ class signatureAlgorithm
 	private:
             
             template<class Digest>
-                void doDigest(string input)
+                void doHashDigest(string input)
                 {
                     _digestSize = (Digest::DIGESTSIZE);
+                    cout << "_digestSize: " << _digestSize << endl;
                     _digest = new byte[ _digestSize ];
                     Digest().CalculateDigest( _digest, (byte*) input.c_str(), input.length() );
+                    cout << "_digest: " << string(reinterpret_cast<const char*>(_digest)) << endl;
+                }
+            template<class HMAC>
+                void doHmacDigest(string input)
+                {
+                    _alternateEncoder = true;
+                    string mac;
+                    size_t found = _algorithm.find("*");
+                    string tempKey = _algorithm.substr(found + 1);
+                    cout << "hmac key: " << tempKey << endl;
+                   // CryptoPP::SecByteBlock key(tempKey.length());
+                    _keySize = tempKey.length();
+                    cout << "_keySize: " << _keySize << endl;
+                    _key = new byte[ _keySize ];
+                    _key = (byte*) tempKey.c_str();
+                    
+                    _digestSize = HMAC::DIGESTSIZE;
+                    cout << "_digestSize: " << _digestSize << endl;
+                    try
+                    {
+                            HMAC hmac(_key, _keySize);		
+                            CryptoPP::StringSource(input, true, 
+                                    new CryptoPP::HashFilter(hmac,
+                                            new CryptoPP::StringSink(mac)
+                                    ) // HashFilter      
+                            ); // StringSource
+                            
+                            _digest = new byte[ _digestSize ];
+                            _digest = (byte*) mac.c_str();
+                            cout << "hmac: " << mac << endl;
+                    }
+                    catch(const CryptoPP::Exception& e)
+                    {
+                            cerr << e.what() << endl;
+                            exit(1);
+                    }
                 }
             
             string getDigestHex();
+            string getAlternateDigestHex();
             string getDigestBase64();
             string base64_encode(unsigned char const*, unsigned int);
 
             string _algorithm;
             string _outputEncoding;
             byte* _digest;
+            byte* _key;
             size_t _digestSize;
+            size_t _keySize;
             bool _ready;
+            bool _alternateEncoder;
 };
 
 #endif

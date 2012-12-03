@@ -23,14 +23,17 @@ signatureAlgorithm::signatureAlgorithm()
 signatureAlgorithm::signatureAlgorithm(string algorithmName)
 {
     _digestSize = (size_t) 0;
+    _keySize = (size_t) 0;
     _ready = false;
     _outputEncoding = "none";
+    _alternateEncoder = false;
     setAlgorithm(algorithmName);
 }
 
 signatureAlgorithm::~signatureAlgorithm()
 {
-    delete [] _digest;
+    if (((int) _keySize) == 0)
+        delete [] _digest;
 }
 
 /******************************************************
@@ -85,8 +88,10 @@ string signatureAlgorithm::getDigest()
     {
         if (_outputEncoding == "none")
             return string(reinterpret_cast<const char*>(_digest));
-        else if (_outputEncoding == "hex")
+        else if ((_outputEncoding == "hex") & (_alternateEncoder == false))
             return getDigestHex();
+        else if ((_outputEncoding == "hex") & (_alternateEncoder == true))
+            return getAlternateDigestHex();
         else if (_outputEncoding == "base64")
             return getDigestBase64();
         else
@@ -103,34 +108,63 @@ string signatureAlgorithm::getDigest()
 void signatureAlgorithm::createDigest(string input)
 {
     bool digestFail = false;
+    size_t found = 0;
     
     if (_algorithm == "md5")
     {
-        signatureAlgorithm::doDigest<CryptoPP::MD5>(input);
+        doHashDigest<CryptoPP::MD5>(input);
     }
     else if (_algorithm == "md2")
     {
-        signatureAlgorithm::doDigest<CryptoPP::MD2>(input);
+        doHashDigest<CryptoPP::MD2>(input);
     }
     else if (_algorithm == "md4")
     {
-        signatureAlgorithm::doDigest<CryptoPP::MD4>(input);
+        doHashDigest<CryptoPP::MD4>(input);
     }
     else if (_algorithm == "sha1")
     {
-        signatureAlgorithm::doDigest<CryptoPP::SHA1>(input);
+        doHashDigest<CryptoPP::SHA1>(input);
     }
     else if (_algorithm == "sha256")
     {
-        signatureAlgorithm::doDigest<CryptoPP::SHA256>(input);
+        doHashDigest<CryptoPP::SHA256>(input);
     }
     else if (_algorithm == "sha512")
     {
-        signatureAlgorithm::doDigest<CryptoPP::SHA512>(input);
+        doHashDigest<CryptoPP::SHA512>(input);
     }
     else if (_algorithm == "sha384")
     {
-        signatureAlgorithm::doDigest<CryptoPP::SHA384>(input);
+        doHashDigest<CryptoPP::SHA384>(input);
+    }
+    else if (_algorithm.find("hmac<md5>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::MD5> >(input);
+    }
+    else if (_algorithm.find("hmac<md2>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::MD2> >(input);
+    }
+    else if (_algorithm.find("hmac<md4>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::MD4> >(input);
+    }
+    else if (_algorithm.find("hmac<sha1>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA1> >(input);
+    }
+    else if (_algorithm.find("hmac<sha256>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA256> >(input);
+    }
+    else if (_algorithm.find("hmac<sha384>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA384> >(input);
+    }
+    else if (_algorithm.find("hmac<sha512>") < _algorithm.length())
+    {
+        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA512> >(input);
     }
     else
         digestFail = true;
@@ -147,14 +181,33 @@ void signatureAlgorithm::createDigest(string input)
 
 string signatureAlgorithm::getDigestHex()
 {
-    CryptoPP::HexEncoder encoder;
     string output;
+    
+    CryptoPP::HexEncoder encoder;
+    
     encoder.Attach( new CryptoPP::StringSink( output ) );
     encoder.Put( _digest, _digestSize );
     encoder.MessageEnd();
-
+    
+    cout << "Hex Digest: " << output << endl;
+    
     return output;
-//    return string(reinterpret_cast<const char*>(_digest));
+}
+
+string signatureAlgorithm::getAlternateDigestHex()
+{
+    string output;
+    string tempDigest = string(reinterpret_cast<const char*>(_digest));
+    
+    CryptoPP::StringSource(tempDigest, true,
+		new CryptoPP::HexEncoder(
+			new CryptoPP::StringSink(output)
+		) // HexEncoder
+	); // StringSource
+    
+    cout << "Hex Digest: " << output << endl;
+    
+    return output;
 }
 
 /**************************************************************************
