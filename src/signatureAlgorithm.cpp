@@ -138,34 +138,59 @@ void signatureAlgorithm::createDigest(string input)
     {
         doHashDigest<CryptoPP::SHA384>(input);
     }
+    else if (_algorithm == "whirlpool")
+    {
+        doHashDigest<CryptoPP::Whirlpool>(input);
+    }
+    else if (_algorithm == "tiger")
+    {
+        doHashDigest<CryptoPP::Tiger>(input);
+    }
+    else if (_algorithm == "ripemd128")
+    {
+        doHashDigest<CryptoPP::RIPEMD128>(input);
+    }
+    else if (_algorithm == "ripemd256")
+    {
+        doHashDigest<CryptoPP::RIPEMD256>(input);
+    }
+    else if (_algorithm == "ripemd160")
+    {
+        doHashDigest<CryptoPP::RIPEMD160>(input);
+    }
+    else if (_algorithm == "ripemd320")
+    {
+        doHashDigest<CryptoPP::RIPEMD320>(input);
+    }
     else if (_algorithm.find("hmac<md5>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::MD5> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::MD5> >(input);
     }
     else if (_algorithm.find("hmac<md2>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::MD2> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::MD2> >(input);
     }
     else if (_algorithm.find("hmac<md4>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::MD4> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::MD4> >(input);
     }
     else if (_algorithm.find("hmac<sha1>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA1> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::SHA1> >(input);
     }
     else if (_algorithm.find("hmac<sha256>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA256> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::SHA256> >(input);
     }
     else if (_algorithm.find("hmac<sha384>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA384> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::SHA384> >(input);
     }
     else if (_algorithm.find("hmac<sha512>") < _algorithm.length())
     {
-        doHmacDigest<CryptoPP::HMAC<CryptoPP::SHA512> >(input);
+        doMacDigest<CryptoPP::HMAC<CryptoPP::SHA512> >(input);
     }
+    
     else
         digestFail = true;
     
