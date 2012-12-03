@@ -55,10 +55,12 @@ The entire Crypto++ library is included other functions as well, and as developm
    *md5
    *md2
    *sha1
-   *sha
    *sha256
    *sha384
    *sha512
+   
+# Message Authentication Codes
+   *hmac<md5> / <md2> / <md4> / <sha1> / <sha256> / <sha384> / <sha512>
    
 # Output Encoding:
    * none
