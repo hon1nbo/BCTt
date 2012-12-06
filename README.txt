@@ -52,15 +52,15 @@ BCTt currently supports the following cryptographic functions
 The entire Crypto++ library is included other functions as well, and as development progresses more of it will be implemented by default.
 
 # Cryptographic Hashing:
-   *md5
-   *md2
-   *sha1
-   *sha256
-   *sha384
-   *sha512
+   * md5
+   * md2
+   * sha1
+   * sha256
+   * sha384
+   * sha512
    
 # Message Authentication Codes
-   *hmac<md5> / <md2> / <md4> / <sha1> / <sha256> / <sha384> / <sha512>
+   * hmac<md5>*KEY / <md2> / <md4> / <sha1> / <sha256> / <sha384> / <sha512>
    
 # Output Encoding:
    * none
