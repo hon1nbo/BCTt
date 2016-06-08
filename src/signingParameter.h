@@ -5,7 +5,7 @@
 * used to provide a structure for configurable parameters
 * used to sign messages.
 *
-* Author: James (Jimmy) Hartnett
+* Author: Hon1nbo
 ***********************************************************/
 
 

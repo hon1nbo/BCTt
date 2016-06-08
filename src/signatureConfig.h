@@ -6,7 +6,7 @@
 * It uses a configuration file to create the appropriate signing.
 * An example configuration file is provided in the root of the BCTt folder.
 *
-* Author: James (Jimmy) Hartnett
+* Author: Hon1nbo
 ***************************************************************************/
 
 #ifndef signatureConfig_h

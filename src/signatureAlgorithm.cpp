@@ -6,7 +6,7 @@
 * This is a generic wrapper for other algorithms provided by the crypto library,
 * ensuring that there is a common interface.
 * 
-* Author: James (Jimmy) Hartnett
+* Author: Hon1nbo
 *******************************************************************************/
 
 #include "signatureAlgorithm.h"

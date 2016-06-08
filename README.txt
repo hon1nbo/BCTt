@@ -1,6 +1,6 @@
 /**************************************************************************************
 ** Burp Cryptographic Tamper tool (BCTt)
-** Author: James (Jimmy) Hartnett
+** Author: Hon1nbo
 ** Tool for performing cryptographic operations on messages intercepted with Burp
 ** Created to be called as a "external editor" using the "Belch" Burp Extension
 ** Current Status: Early Development
@@ -9,6 +9,8 @@
 
 # Reading Tip: this readme is laid out for syntax highlighters
 # I use notepad++ with C++ highlighting enabled.
+
+# Eventually this will be moved to the MarkDown format, but I have better things to do with other projects.
 
 /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
  #Table of Contents:           *

@@ -3,7 +3,7 @@
 * 
 * Provides the implementation of the signingParameter objects
 *
-* Author: James (Jimmy) Hartnett
+* Author: Hon1nbo
 *************************************************************/
 
 #include "signingParameter.h"

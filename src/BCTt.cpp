@@ -8,7 +8,7 @@
 * A sample configuration file is provided
 * Cryptographic functions are provided by Crypto++
 * 
-* Author: James (Jimmy) Hartnett
+* Author: Hon1nbo
 ***************************************************************************/
 
 #include <iostream>
