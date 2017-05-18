@@ -1,19 +1,4 @@
-#Burp Cryptographic Tamper tool (BCTt)
-
- #Table of Contents:           *
-                               *
- * Info                        *
- * Supported Functions         *
- * Limitations                 *
- * System Requirements         *
- * Usage                       *
- * Configuration               *
-	*'algorithm'               *
-	*'Parsing Parameters'      *
-	*'Post-Parsing Parameters' *
-	*'Do Final String'         *
- * TODOs                       *
-/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# Burp Cryptographic Tamper tool (BCTt)
 
 # Introduction
 Burp is a great tool for pen-testing client-server communications, but it has a big problem:
@@ -45,7 +30,7 @@ default.
     * sha512
    
 * Message Authentication Codes
-    * hmac<md5>*KEY / <md2> / <md4> / <sha1> / <sha256> / <sha384> / <sha512>
+    * hmac\<md5\>*KEY / \<md2\> / \<md4\> / \<sha1\> / \<sha256\> / \<sha384\> / \<sha512\>
    
 * Output Encoding:
     * none
@@ -93,7 +78,7 @@ which triggers Burp to send the message.
 Please see exampleConfig.txt in the source directory for a sample layout. *Capitalization & Order* of these entries matters.
 
 ### algorithm:XXX:YYY
-    * Required (one or more)
+* *Required* (one or more)
 
 This sets a algorithm to use for signing or encrypting. This can occurr multiple times. It is chained in the order in which they 
 are entered.
@@ -104,7 +89,7 @@ If no output encoding should be used, then replace "YYY" with "none" (without qu
 
 	
 ### signatureParameter:XXXXXXX
-    * Required (specify only once)
+* *Required* (specify only once)
 
 This sets the value used to identify the actual signature in the message.
 the "XXXXXX" should be replaced with the actual value, without quotes. If there is a space between the signature parameter and 
@@ -112,7 +97,7 @@ the actual signature, it should be included.
 
 
 ### parseParameter:XXXXXX
-    * Required if no postParseParameter is used (one or more)
+* *Required* if no postParseParameter is used (one or more)
 This adds an identifier for a parameter contained in the message used in forming the signature, such as a username, timestamp, 
 the message contents, etc.
 The "XXXXXX" should be replaced with whatever identifies the parameter, without quotes. If there is a space between the 
@@ -124,14 +109,14 @@ parseParameter:[BCTt:message_body]
 
 	
 ### postParseParameter:XXX:YYY
-    * Required if no parseParameter is used (one or more)
+* *Required* if no parseParameter is used (one or more)
 This adds a parameter that is specified outside of the message itself. This includes keys stored on the client/server, 
 passwords, etc.
 The "XXX" should be replaced by an identifier for the parameter, and the "YYY" with it's actual value.
 
 
 ### doFinalString:XXXX.YYY.ZZZ.
-    * Required
+* *Required*
 
 This specifies how the data should be formatted when sent to the algorithms for signing or encrypting.
 The parameters can either:
