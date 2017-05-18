@@ -178,3 +178,5 @@ Order of these entries matters.
 * look into replacing string search if statment blocks with a Map.
 * implement more of the Crypto++ library
 * allow more parameters to be specified for crytpographic functions.
+
+.
